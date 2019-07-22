@@ -31,60 +31,42 @@ require_once "src/class/newTable.php";
 </head>
 <body>
 <?php
-echo "<form action='' method='post'>" . "<table border='1px'>";
-$builder_table->addTopTable();
+echo "<form action='' method='post'>";
 // Add new Table
+
 $arr_table = [];
 $arr_rov_table = [];
-/*$row_year = [
-  'year' => 2019,
-  'jan' => '',
-  'feb' => '',
-  'mar' => '',
-  'q1' => '',
-  'apr' => '',
-  'may' => '',
-  'jun' => '',
-  'q2' => '',
-  'jul' => '',
-  'aug' => '',
-  'sep' => '',
-  'q3' => '',
-  'oct' => '',
-  'nov' => '',
-  'dec' => '',
-  'q4' => '',
-  'ytd' => '',
-];*/
 
+if (isset($_POST['arr'])) {
+  $createTable = [];
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
+  if (isset($_POST['add_year'])) {
+    foreach ($_POST['arr'] as $key => $years) {
+//      $addYear = $key;
+      $createTable[$key] = new \createTable\createTable();
 
-  /*if (isset($_POST['arr'])){
-
-    foreach ($_POST['arr'] as $key => $item) {
-      if (!isset($arr_table[$key])){
-        $arr_table[$key] = new \createTable\createTable($item);
+      foreach ($years as $y => $m) {
+        $createTable[$key]->addYear($y, $m);
       }
     }
-    var_dump($arr_table);
-    foreach ($arr_table as $method){
-      $show_method[] = $method->builderTable();
-    }
-  }*/
-  if (isset($_POST['add_year'])){
-    if (isset($_POST['arr']))
-      foreach ($_POST['arr'] as $item)
-    $arr_table[] = new \createTable\createTable($item);
-    foreach ($arr_table as $key => $method){
-      $show_method[$key] = $method->createRowYear();
-    }
+    $createTable[0]->addOldYear();
   }
+/*  elseif (isset($_POST['add_table'])){
+      //    $createTable[$addYear]->addOldYear();
+      $createTable[] = new \createTable\createTable();
+      $createTable[count($createTable) - 1]->addYear(date("Y"));
+      var_dump($createTable);
+  }*/
+  foreach ($createTable as $table) {
+    $tableRender[] = $table->render();
+  }
+
 }
-
-
-
-
+ else {
+  $createTable = new \createTable\createTable();
+  $createTable->addYear(date('Y'), []);
+  $createTable->render();
+}
 
 
 echo "</table>" . "<input type='submit' name='save' value='Submit'>" .
