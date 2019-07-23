@@ -1,6 +1,15 @@
 <?php
 require_once "src/class/createTable.php";
 require_once "src/class/newTable.php";
+require_once "src/function/validation.php";
+
+$tad = NULL;
+foreach ($_POST as $k => $p) {
+  if ($p == 'Add Year') {
+    $tad = $k;
+  }
+}
+var_dump($tad);
 
 ?>
 <!doctype html>
@@ -40,37 +49,41 @@ $arr_rov_table = [];
 if (isset($_POST['arr'])) {
   $createTable = [];
 
-  if (isset($_POST['add_year'])) {
+  if (isset($tad)) {
     foreach ($_POST['arr'] as $key => $years) {
-//      $addYear = $key;
       $createTable[$key] = new \createTable\createTable();
 
       foreach ($years as $y => $m) {
         $createTable[$key]->addYear($y, $m);
       }
     }
-    $createTable[0]->addOldYear();
+    $createTable[$tad]->addOldYear();
   }
-/*  elseif (isset($_POST['add_table'])){
-      //    $createTable[$addYear]->addOldYear();
-      $createTable[] = new \createTable\createTable();
-      $createTable[count($createTable) - 1]->addYear(date("Y"));
-      var_dump($createTable);
-  }*/
+  elseif (isset($_POST['add_table'])) {
+    foreach ($_POST['arr'] as $key => $years) {
+      $createTable[$key] = new \createTable\createTable();
+
+      foreach ($years as $y => $m) {
+        $createTable[$key]->addYear($y, $m);
+      }
+    }
+    $createTable[] = new \createTable\createTable();
+    $createTable[count($createTable) - 1]->addYear(date("Y"));
+  }
+
   foreach ($createTable as $table) {
     $tableRender[] = $table->render();
   }
-
 }
- else {
+else {
   $createTable = new \createTable\createTable();
   $createTable->addYear(date('Y'), []);
   $createTable->render();
 }
 
 
-echo "</table>" . "<input type='submit' name='save' value='Submit'>" .
-  "<input type='submit' name='add_table' value='Add Table'>" ."</form>";
+echo "</table>" . "</br>" . "<input type='submit' name='save' value='Submit' formaction='src/function/validation.php'>" .
+  "<input type='submit' name='add_table' value='Add Table' >" . "</form>";
 ?>
 </body>
 </html>

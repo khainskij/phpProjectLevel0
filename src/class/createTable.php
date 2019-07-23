@@ -13,8 +13,6 @@ class createTable {
   function __construct() {
     $this->idtable = self::$count;
     self::$count++;
-//    $this->rowYear = $arr_table;
-
   }
   function addYear($year, array $mounts = []) {
     $this->yearTable[$year]  = $mounts;
@@ -44,7 +42,7 @@ class createTable {
   }
 
   function render() {
-    self::addTopTable();
+    $this->addTopTable();
     foreach ($this->yearTable as $year => $mounts) {
       $this->createRowYear($year, $mounts);
     }
@@ -56,8 +54,7 @@ class createTable {
     $this->yearTable = [];
     $this->yearTable = [($old - 1) => []] + $tmp;
   }
-  static function addTopTable() {
-    echo "<input type='submit' name='add_year' value='Add Year'>";
+   function addTopTable() {
     echo  "<table border='1px'>" . "<tr>" .
       "<td>Year</td>" .
       "<td>Jan</td>" .
@@ -78,6 +75,7 @@ class createTable {
       "<td class='color'>Q4</td>" .
       "<td class='color'>YTD</td>";
     echo "</tr>";
+    echo "<span> <input type='submit' name='{$this->idtable}' value='Add Year'></span>";
   }
 
 }
