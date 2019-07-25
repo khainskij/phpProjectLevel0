@@ -1,6 +1,5 @@
 <?php
 require_once "src/class/createTable.php";
-require_once "src/class/newTable.php";
 require_once "src/function/validation.php";
 
 $tad = NULL;
@@ -9,8 +8,6 @@ foreach ($_POST as $k => $p) {
     $tad = $k;
   }
 }
-var_dump($tad);
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,17 +31,21 @@ var_dump($tad);
     }
 
     .color {
-      background: grey;
+      background: #afafaf;
+    }
+
+    tr td input {
+      width: 60px;
+    }
+
+    .color input {
+      background: #b2b2b2;
     }
   </style>
 </head>
 <body>
 <?php
 echo "<form action='' method='post'>";
-// Add new Table
-
-$arr_table = [];
-$arr_rov_table = [];
 
 if (isset($_POST['arr'])) {
   $createTable = [];
@@ -81,8 +82,7 @@ else {
   $createTable->render();
 }
 
-
-echo "</table>" . "</br>" . "<input type='submit' name='save' value='Submit' formaction='src/function/validation.php'>" .
+echo "</table>" . "</br>" . "\n" . "<input type='submit' name='save' value='Submit' formaction='src/function/validation.php'>" . "\n" .
   "<input type='submit' name='add_table' value='Add Table' >" . "</form>";
 ?>
 </body>
