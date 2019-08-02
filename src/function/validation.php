@@ -163,8 +163,8 @@ function validTables($table) {
 function array_has_empty_item($array) {
   foreach ($array as $element) {
     foreach ($element as $man_value) {
-      if (array_filter($element)) {
-        if ($man_value == "") {
+      if (array_filter($element, function ($name) {return $name === '0' ? true: !empty($name);} )) {
+        if ($man_value === "") {
           return TRUE;
         }
         else {
