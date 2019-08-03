@@ -81,7 +81,6 @@ class createTable {
     echo "</tr>" . "\n";
     echo "<span> <input type='submit' name='{$this->idtable}' value='Add Year'></span>";
   }
-
 }
 
 
