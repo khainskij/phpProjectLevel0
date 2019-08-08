@@ -17,10 +17,13 @@ class createTable {
     self::$count++;
   }
 
+  //Obtaining an array of tables that are passed by the post method
+  //Writing the transmitted array to the yearTable[ ] array
   function addYear($year, array $mounts = []) {
     $this->yearTable[$year] = $mounts;
   }
 
+  //Creating table rows
   function createRowYear($year = 2019, array $mounts = []) {
     echo "<tr>" . "\n" .
       "<td>" . $year . "</td>" . "\n" .
@@ -44,6 +47,7 @@ class createTable {
     echo "</tr>" . "\n";
   }
 
+  //Generating a table
   function render() {
     $this->addTopTable();
     foreach ($this->yearTable as $year => $mounts) {
@@ -51,6 +55,7 @@ class createTable {
     }
   }
 
+  //Adding the previous year to the table
   function addOldYear() {
     $old = min(array_keys($this->yearTable));
     $tmp = $this->yearTable;
@@ -58,6 +63,7 @@ class createTable {
     $this->yearTable = [($old - 1) => []] + $tmp;
   }
 
+  //Table header
   function addTopTable() {
     echo "<table border='1px'>" . "<tr>" . "\n" .
       "\t<td>Year</td>" . "\n" .
@@ -77,9 +83,8 @@ class createTable {
       "\t<td>Nov</td>" . "\n" .
       "\t<td>Dec</td>" . "\n" .
       "\t<td class='color'>Q4</td>" . "\n" .
-      "\t<td class='color'>YTD</td>" . "\n";
-    echo "</tr>" . "\n";
-    echo "<span> <input type='submit' name='{$this->idtable}' value='Add Year'></span>";
+      "\t<td class='color'>YTD</td>" . "\n" . "</tr>" . "\n" .
+      "<span> <input type='submit' name='{$this->idtable}' value='Add Year'></span>";
   }
 }
 

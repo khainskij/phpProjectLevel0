@@ -4,6 +4,7 @@ require_once "validation.php";
 
 use \createTable\createTable as createTable;
 
+//Getting the key for one table when a new row is added
 $tad = NULL;
 foreach ($_POST as $k => $p) {
   if ($p == 'Add Year') {
@@ -49,6 +50,7 @@ foreach ($_POST as $k => $p) {
 <?php
 echo "<form action='' method='post'>";
 
+//Adding a new row to a table
 if (isset($_POST['arr'])) {
   $createTable = [];
 
@@ -62,6 +64,8 @@ if (isset($_POST['arr'])) {
     }
     $createTable[$tad]->addOldYear();
   }
+
+  //Adding a new table to an array
   elseif (isset($_POST['add_table'])) {
     foreach ($_POST['arr'] as $key => $years) {
       $createTable[$key] = new createTable();
@@ -74,6 +78,7 @@ if (isset($_POST['arr'])) {
     $createTable[count($createTable) - 1]->addYear(date("Y"));
   }
 
+  //Displays tables from an array
   foreach ($createTable as $table) {
     $tableRender[] = $table->render();
   }
@@ -85,7 +90,7 @@ else {
 }
 
 echo "</table>" . "</br>" . "\n" . "<input type='submit' name='save' value='Submit' formaction='validation.php'>" . "\n" .
-  "<input type='submit' name='add_table' value='Add Table' >" . "</form>";
+  "<input type='submit' name='add_table' value='Add Table'>" . "</form>";
 ?>
 </body>
 </html>
